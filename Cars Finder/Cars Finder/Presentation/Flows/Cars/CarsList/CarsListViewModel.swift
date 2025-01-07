@@ -45,9 +45,7 @@ extension CarsListViewModel {
 extension CarsListViewModel {
     
     func viewDidLoad() {
-        Task {
-            await fetchCars()
-        }
+        refresh()
     }
     
     func refresh() {

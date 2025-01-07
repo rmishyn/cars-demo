@@ -20,7 +20,11 @@ final class CarsListViewController: UIViewController {
     
     // MARK: IBOutlets
     
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView! {
+        didSet {
+            CarTableViewCell.registerWithNib(for: tableView)
+        }
+    }
     
     // MARK: Lifecycle
     
@@ -79,5 +83,27 @@ private extension CarsListViewController {
     
     @objc func onRefreshAction() {
         viewModel?.refresh()
+    }
+}
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
+
+extension CarsListViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        (section == 0) ? (viewModel?.cars.count ?? 0) : 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let viewModel else { return UITableViewCell() }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: CarTableViewCell.identifier, for: indexPath) as! CarTableViewCell
+        cell.configure(with: viewModel.cars[indexPath.row])
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
