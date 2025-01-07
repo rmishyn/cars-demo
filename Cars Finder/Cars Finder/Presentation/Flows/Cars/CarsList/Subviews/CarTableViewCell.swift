@@ -25,7 +25,7 @@ final class CarTableViewCell: UITableViewCell {
     
     // MARK: Public methods
     
-    func configure(with car: Car) {
+    func configure(with car: Car, currency: String, distanceUnit: String) {
         carImageView.sd_setImage(with: car.images?.first?.url.urlValue,
                                  placeholderImage: .transparentIcon) { image, error, _, url in
             print("Image for url='\(String(describing: url))': \(image?.size ?? .zero), error='\(String(describing: error))'")
@@ -33,8 +33,8 @@ final class CarTableViewCell: UITableViewCell {
         infoLabel.text = [car.make, car.model, car.modelline]
             .compactMap({ $0 })
             .joined(separator: " ")
-        priceLabel.text = "€\(car.price.formatted())"
-        firstRegistrationLabel.text = [car.firstRegistration, "\(car.mileage.stringValue) km"]
+        priceLabel.text = "\(currency)\(car.price.formatted())"
+        firstRegistrationLabel.text = [car.firstRegistration, "\(car.mileage.formatted()) \(distanceUnit)"]
             .compactMap({ $0 })
             .joined(separator: " - ")
         fuelLabel.text = "Fuel: \(car.fuel)"

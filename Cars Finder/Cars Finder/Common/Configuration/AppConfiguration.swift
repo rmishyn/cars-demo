@@ -8,7 +8,9 @@
 import Foundation
 
 protocol AppConfigurationProtocol {
-    var apiBaseURL: URL {get}
-    var defaultAcceptType: HTTPContentType {get}
-    var defaultContentType: HTTPContentType {get}
+    var apiBaseURL: URL { get }
+    var defaultAcceptType: HTTPContentType { get }
+    var defaultContentType: HTTPContentType { get }
+    var currency: String { get }
+    var distanceUnit: String { get }
 }

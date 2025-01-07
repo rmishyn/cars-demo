@@ -52,9 +52,19 @@ private extension CarsCoordinator {
     
     func setCars() {
         Task {
-            let configuration = CarsListConfiguration(getCarsUseCase: dependenciesResolver.resolve(GetCarsUseCaseProtocol.self)!)
+            let configuration = CarsListConfiguration(getCarsUseCase: dependenciesResolver.resolve(GetCarsUseCaseProtocol.self)!,
+                                                      appConfiguration: dependenciesResolver.resolve(AppConfigurationProtocol.self)!)
             let viewController = await CarsListViewBuilder().build(output: self, configuration: configuration)
             setToNavigationController(viewController: viewController, animated: false, completion: nil)
+        }
+    }
+    
+    func pushCarDetails(car: Car) {
+        Task {
+            let configuration = CarDetailsConfiguration(car: car,
+                                                        appConfiguration: dependenciesResolver.resolve(AppConfigurationProtocol.self)!)
+            let viewController = await CarDetailsViewBuilder().build(output: self, configuration: configuration)
+            pushToNavigationController(viewController: viewController, animated: true)
         }
     }
 }
@@ -62,5 +72,14 @@ private extension CarsCoordinator {
 // MARK: - CarsOutput
 
 extension CarsCoordinator: CarsListOutput {
+    
+    func openCarDetails(car: Car) {
+        pushCarDetails(car: car)
+    }
+}
+
+// MARK: - CarDetailsOutput
+
+extension CarsCoordinator: CarDetailsOutput {
     
 }

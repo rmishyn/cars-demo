@@ -39,6 +39,9 @@ private extension SceneDelegateService {
     
     @MainActor
     func setupSceneCoordinator() {
+        
+        UINavigationBar.appearance().tintColor = .content
+        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor.accent

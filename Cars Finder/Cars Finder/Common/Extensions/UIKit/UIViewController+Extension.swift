@@ -15,7 +15,6 @@ extension UIViewController {
         if let vc = vc {
             preLoadSetup?(vc)
         }
-//        vc?.loadViewIfNeeded()
         return vc
     }
 
@@ -29,5 +28,14 @@ extension UIViewController {
 
     static func makeFromStoryboard() -> Self? {
         makeFromStoryboard(preLoadSetup: nil)
+    }
+}
+
+extension UIViewController {
+    
+    func showAlert(title: String?, message: String?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }

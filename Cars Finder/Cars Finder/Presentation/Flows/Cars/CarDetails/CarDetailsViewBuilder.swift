@@ -1,5 +1,5 @@
 //
-//  CarsListBuilder.swift
+//  CarDetailsViewBuilder.swift
 //  Cars Finder
 //
 //  Created by Ruslan Mishyn on 07.01.2025.
@@ -7,17 +7,17 @@
 
 import Foundation
 
-struct CarsListConfiguration {
-    let getCarsUseCase: GetCarsUseCaseProtocol
+struct CarDetailsConfiguration {
+    let car: Car
     let appConfiguration: AppConfigurationProtocol
 }
 
-struct CarsListViewBuilder {
+struct CarDetailsViewBuilder {
     
-    typealias BuilderConfiguration = CarsListConfiguration
-    typealias BuilderOutput = CarsListOutput
-    typealias BuilderViewController = CarsListViewController
-    typealias BuilderViewModel = CarsListViewModel
+    typealias BuilderConfiguration = CarDetailsConfiguration
+    typealias BuilderOutput = CarDetailsOutput
+    typealias BuilderViewController = CarDetailsViewController
+    typealias BuilderViewModel = CarDetailsViewModel
     
     func build(output: BuilderOutput, configuration: BuilderConfiguration) async -> BuilderViewController {
         let vc = await BuilderViewController.makeFromStoryboard { vc in

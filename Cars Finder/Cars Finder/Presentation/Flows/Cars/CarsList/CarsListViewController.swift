@@ -45,7 +45,6 @@ final class CarsListViewController: UIViewController {
 private extension CarsListViewController {
     
     func setup(with viewModel: CarsListViewModelProtocol) {
-        title = viewModel.screenTitle
         navigationItem.title = viewModel.screenTitle
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(onRefreshAction), for: .valueChanged)
@@ -98,12 +97,15 @@ extension CarsListViewController: UITableViewDelegate, UITableViewDataSource {
         guard let viewModel else { return UITableViewCell() }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CarTableViewCell.identifier, for: indexPath) as! CarTableViewCell
-        cell.configure(with: viewModel.cars[indexPath.row])
+        cell.configure(with: viewModel.cars[indexPath.row],
+                       currency: viewModel.currency,
+                       distanceUnit: viewModel.distanceUnit)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        viewModel?.carPressed(at: indexPath.row)
     }
 }
