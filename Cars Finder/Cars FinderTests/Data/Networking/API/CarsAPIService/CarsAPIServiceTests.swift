@@ -32,8 +32,8 @@ final class CarsAPIServiceTests: XCTestCase {
     }
     
     func testGetCars() async throws {
-        let carsAPI = container.resolve(CarsAPIProtocol.self)!
-        let networkingService = container.resolve(NetworkingServiceProtocol.self)!
+        let carsAPI = try XCTUnwrap(container.resolve(CarsAPIProtocol.self))
+        let networkingService = try XCTUnwrap(container.resolve(NetworkingServiceProtocol.self))
         let carsAPIService = CarsAPIService(carsAPI: carsAPI, networkingService: networkingService)
         var cars = try await carsAPIService.getCars()
         cars = try XCTUnwrap(cars)

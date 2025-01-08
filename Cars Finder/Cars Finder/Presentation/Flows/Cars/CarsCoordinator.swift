@@ -52,8 +52,13 @@ private extension CarsCoordinator {
     
     func setCars() {
         Task {
-            let configuration = CarsListConfiguration(getCarsUseCase: dependenciesResolver.resolve(GetCarsUseCaseProtocol.self)!,
-                                                      appConfiguration: dependenciesResolver.resolve(AppConfigurationProtocol.self)!)
+            guard let getCarsUseCase = dependenciesResolver.resolve(GetCarsUseCaseProtocol.self) else {
+                fatalError("Cannot resolve GetCarsUseCaseProtocol dependency")
+            }
+            guard let appConfiguration = dependenciesResolver.resolve(AppConfigurationProtocol.self) else {
+                fatalError("Cannot resolve AppConfigurationProtocol dependency")
+            }
+            let configuration = CarsListConfiguration(getCarsUseCase: getCarsUseCase, appConfiguration: appConfiguration)
             let viewController = await CarsListViewBuilder().build(output: self, configuration: configuration)
             setToNavigationController(viewController: viewController, animated: false, completion: nil)
         }
@@ -61,8 +66,10 @@ private extension CarsCoordinator {
     
     func pushCarDetails(car: Car) {
         Task {
-            let configuration = CarDetailsConfiguration(car: car,
-                                                        appConfiguration: dependenciesResolver.resolve(AppConfigurationProtocol.self)!)
+            guard let appConfiguration = dependenciesResolver.resolve(AppConfigurationProtocol.self) else {
+                fatalError("Cannot resolve AppConfigurationProtocol dependency")
+            }
+            let configuration = CarDetailsConfiguration(car: car, appConfiguration: appConfiguration)
             let viewController = await CarDetailsViewBuilder().build(output: self, configuration: configuration)
             pushToNavigationController(viewController: viewController, animated: true)
         }

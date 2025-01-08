@@ -8,7 +8,7 @@
 import UIKit
 import Swinject
 
-final class SceneDelegateService: SceneDelegateServiceProtocol {
+final class SceneDelegateService {
     
     // MARK: Properties
     

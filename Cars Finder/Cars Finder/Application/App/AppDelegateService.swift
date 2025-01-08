@@ -40,17 +40,31 @@ private extension AppDelegateService {
             NetworkingService()
         }
         diContainer.register(CarsAPIProtocol.self) { resolver in
-            CarsAPI(appConfiguration: resolver.resolve(AppConfigurationProtocol.self)!)
+            guard let appConfiguration = resolver.resolve(AppConfigurationProtocol.self) else {
+                fatalError("Cannot resolve AppConfigurationProtocol dependency")
+            }
+            return CarsAPI(appConfiguration: appConfiguration)
         }
         diContainer.register(CarsAPIServiceProtocol.self) { resolver in
-            CarsAPIService(carsAPI: resolver.resolve(CarsAPIProtocol.self)!,
-                           networkingService: resolver.resolve(NetworkingServiceProtocol.self)!)
+            guard let carsAPI = resolver.resolve(CarsAPIProtocol.self) else {
+                fatalError("Cannot resolve CarsAPIProtocol dependency")
+            }
+            guard let networkingService = resolver.resolve(NetworkingServiceProtocol.self) else {
+                fatalError("Cannot resolve NetworkingServiceProtocol dependency")
+            }
+            return CarsAPIService(carsAPI: carsAPI, networkingService: networkingService)
         }
         diContainer.register(CarsRepositoryProtocol.self) { resolver in
-            CarsRepository(carsAPIService: resolver.resolve(CarsAPIServiceProtocol.self)!)
+            guard let carsAPIService = resolver.resolve(CarsAPIServiceProtocol.self) else {
+                fatalError("Cannot resolve CarsAPIServiceProtocol dependency")
+            }
+            return CarsRepository(carsAPIService: carsAPIService)
         }
         diContainer.register(GetCarsUseCaseProtocol.self) { resolver in
-            GetCarsUseCase(repository: resolver.resolve(CarsRepositoryProtocol.self)!)
+            guard let repository = resolver.resolve(CarsRepositoryProtocol.self) else {
+                fatalError("Cannot resolve CarsRepositoryProtocol dependency")
+            }
+            return GetCarsUseCase(repository: repository)
         }
         self.diContainer = diContainer
     }

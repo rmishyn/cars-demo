@@ -18,7 +18,7 @@ struct CoordinatorConfiguration<T> {
 }
 
 /// Protocol describing a scenes coordinator. Coordinators are used to support "MVVM with coordinators" architecture pattern
-protocol Coordinator: AnyObject, ChildCoordinatorFinishing {
+protocol Coordinator: AnyObject {
     
     associatedtype T
     
@@ -49,17 +49,6 @@ protocol Coordinator: AnyObject, ChildCoordinatorFinishing {
     
     ///
     func pushToNavigationController(viewController: UIViewController, animated: Bool)
-    
-    ///
-    func restartPushedViewControllers()
-}
-
-/// Protocol describing an ability of coordinatpr to process finishing events from child coordinator. This may happen when subflow is completed
-protocol ChildCoordinatorFinishing {
-    /// Process a child coordinator finishing event right before child subflow will finish
-    func willFinish(coordinator: any Coordinator)
-    /// Process a child coordinator finishing event right after child subflow did finish
-    func didFinish(coordinator: any Coordinator)
 }
 
 extension Coordinator {
@@ -114,35 +103,6 @@ extension Coordinator {
         set(pushedViewControllers: (viewController == nil) ? [] : [Weak(value: viewController!)])
     }
     
-    func setToNavigationController(viewControllers controllers: [UIViewController], animated: Bool, completion: VoidClosure?) {
-        var viewControllers = navigationController.viewControllers
-        let _pushedViewControllers = pushedViewControllers.compactMap({ $0.value })
-        viewControllers.removeAll(where: { _pushedViewControllers.contains($0) })
-        if !controllers.isEmpty {
-            viewControllers.append(contentsOf: controllers)
-        }
-        if viewControllers.isEmpty {
-            if let _ = navigationController.presentingViewController {
-                navigationController.dismiss(animated: true, completion: completion)
-            } else {
-                fatalError("Unable to finish coordinator: Tried to set empty 'viewControllers' to 'navigationController'")
-            }
-        } else {
-            navigationController.setViewControllers(viewControllers, animated: animated)
-            if let completion = completion {
-                if animated {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
-                        completion()
-                    })
-                } else {
-                    completion()
-                }
-            }
-        }
-        
-        set(pushedViewControllers: controllers.map({ Weak(value: $0) }))
-    }
-    
     func pushToNavigationController(viewController: UIViewController, animated: Bool) {
         navigationController.pushViewController(viewController, animated: true)
         var newPushedViewControllers = pushedViewControllers.filter({ $0.value != nil })
@@ -150,32 +110,7 @@ extension Coordinator {
         set(pushedViewControllers: newPushedViewControllers)
     }
     
-    func restartPushedViewControllers() {
-        set(pushedViewControllers: [], isRestart: true)
-    }
-    
     private func set(pushedViewControllers: [Weak<UIViewController>]) {
-        set(pushedViewControllers: pushedViewControllers, isRestart: false)
-    }
-    
-    private func set(pushedViewControllers: [Weak<UIViewController>], isRestart: Bool) {
-        
-        if pushedViewControllers.isEmpty, !isRestart {
-            (output as? ChildCoordinatorFinishing)?.willFinish(coordinator: self)
-        }
         _pushedViewControllers = pushedViewControllers
-        if pushedViewControllers.isEmpty, !isRestart {
-            (output as? ChildCoordinatorFinishing)?.didFinish(coordinator: self)
-        }
-    }
-}
-
-extension ChildCoordinatorFinishing where Self: Coordinator {
-    func willFinish(coordinator: any Coordinator) {
-        
-    }
-    
-    func didFinish(coordinator: any Coordinator) {
-        childCoordinators.removeAll(where: { $0 === coordinator })
     }
 }
