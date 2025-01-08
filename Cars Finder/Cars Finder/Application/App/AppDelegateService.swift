@@ -35,7 +35,7 @@ private extension AppDelegateService {
         let diContainer = Container()
         diContainer.register(AppConfigurationProtocol.self) { _ in
             AppConfiguration()
-        }
+        }.inObjectScope(.container)
         diContainer.register(NetworkingServiceProtocol.self) { _ in
             NetworkingService()
         }

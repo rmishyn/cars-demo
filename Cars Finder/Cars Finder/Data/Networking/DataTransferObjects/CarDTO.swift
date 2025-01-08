@@ -20,4 +20,10 @@ struct CarDTO: Codable {
     let images: [CarImageDTO]?
     let description: String
     let seller: CarSellerDTO?
+    
+    var info: String {
+        [make, model, modelline]
+            .compactMap({ $0 })
+            .joined(separator: " ")
+    }
 }

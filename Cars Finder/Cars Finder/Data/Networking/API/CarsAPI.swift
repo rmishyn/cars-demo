@@ -8,10 +8,6 @@
 import Foundation
 import Alamofire
 
-protocol CarsAPIProtocol: API {
-    func getCarsEndpoint() -> APIEndpoint
-}
-
 final class CarsAPI: CarsAPIProtocol {
     
     // MARK: - Enumerataions

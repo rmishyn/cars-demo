@@ -11,6 +11,7 @@
 		4493545F2D2C58390049685F /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 4493545E2D2C58390049685F /* Swinject */; };
 		449354C72D2D6B990049685F /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 449354C62D2D6B990049685F /* SDWebImage */; };
 		449354CA2D2D6C210049685F /* SVProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 449354C92D2D6C210049685F /* SVProgressHUD */; };
+		449354FF2D2DE8290049685F /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 449354FE2D2DE8290049685F /* Swinject */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,25 @@
 			);
 			target = 449354212D2C3EEB0049685F /* Cars Finder */;
 		};
+		449354FC2D2DE7F10049685F /* Exceptions for "Cars Finder" folder in "Cars FinderTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Common/Configuration/AppConfiguration.swift,
+				Common/Configuration/AppConfigurationContract.swift,
+				Data/Networking/API/CarsAPI.swift,
+				Data/Networking/API/CarsAPIContract.swift,
+				Data/Networking/API/CarsAPIService.swift,
+				Data/Networking/API/CarsAPIServiceContract.swift,
+				Data/Networking/Core/API.swift,
+				Data/Networking/Core/HTTPContentType.swift,
+				Data/Networking/Core/HTTPHeaderField.swift,
+				Data/Networking/Core/NetworkingServiceContract.swift,
+				Data/Networking/DataTransferObjects/CarDTO.swift,
+				Data/Networking/DataTransferObjects/CarImageDTO.swift,
+				Data/Networking/DataTransferObjects/CarSellerDTO.swift,
+			);
+			target = 449354372D2C3EEC0049685F /* Cars FinderTests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -51,6 +71,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				4493544A2D2C3EEC0049685F /* Exceptions for "Cars Finder" folder in "Cars Finder" target */,
+				449354FC2D2DE7F10049685F /* Exceptions for "Cars Finder" folder in "Cars FinderTests" target */,
 			);
 			path = "Cars Finder";
 			sourceTree = "<group>";
@@ -83,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				449354FF2D2DE8290049685F /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +124,7 @@
 				449354242D2C3EEB0049685F /* Cars Finder */,
 				4493543B2D2C3EEC0049685F /* Cars FinderTests */,
 				449354452D2C3EEC0049685F /* Cars FinderUITests */,
+				449354FD2D2DE8290049685F /* Frameworks */,
 				449354232D2C3EEB0049685F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -114,6 +137,13 @@
 				449354422D2C3EEC0049685F /* Cars FinderUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		449354FD2D2DE8290049685F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,6 +193,7 @@
 			);
 			name = "Cars FinderTests";
 			packageProductDependencies = (
+				449354FE2D2DE8290049685F /* Swinject */,
 			);
 			productName = "Cars FinderTests";
 			productReference = 449354382D2C3EEC0049685F /* Cars FinderTests.xctest */;
@@ -654,6 +685,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 449354C82D2D6C210049685F /* XCRemoteSwiftPackageReference "SVProgressHUD" */;
 			productName = SVProgressHUD;
+		};
+		449354FE2D2DE8290049685F /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4493545D2D2C58390049685F /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

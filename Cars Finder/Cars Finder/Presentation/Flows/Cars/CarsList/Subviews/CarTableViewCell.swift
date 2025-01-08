@@ -30,9 +30,7 @@ final class CarTableViewCell: UITableViewCell {
                                  placeholderImage: .transparentIcon) { image, error, _, url in
             print("Image for url='\(String(describing: url))': \(image?.size ?? .zero), error='\(String(describing: error))'")
         }
-        infoLabel.text = [car.make, car.model, car.modelline]
-            .compactMap({ $0 })
-            .joined(separator: " ")
+        infoLabel.text = car.info
         priceLabel.text = "\(currency)\(car.price.formatted())"
         firstRegistrationLabel.text = [car.firstRegistration, "\(car.mileage.formatted()) \(distanceUnit)"]
             .compactMap({ $0 })

@@ -69,9 +69,7 @@ private extension CarDetailsViewController {
             imagesCollectionView?.collectionViewLayout = flowLayout
         }
         
-        infoLabel.text = [car.make, car.model, car.modelline]
-            .compactMap({ $0 })
-            .joined(separator: " ")
+        infoLabel.text = car.info
         priceLabel.text = "\(viewModel.currency)\(car.price.formatted())"
         firstRegistrationLabel.text = "First registration: \(car.firstRegistration ?? "")"
         mileageLabel.text = "Mileage: \(car.mileage.formatted()) \(viewModel.distanceUnit)"
